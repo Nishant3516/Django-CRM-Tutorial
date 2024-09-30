@@ -1,0 +1,50 @@
+{% extends "website/base.html" %}
+
+{% block content %}
+<div class = "col-md-6 offset-md-3">
+
+{% if user.is_authenticated %}
+<h1>Records</h1>
+{% if records %}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Email</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for record in records %}
+    <tr>
+      <td><a href="{% url "record" record.id %}">{{record.id}}</a></td>
+      <td>{{record.first_name}}</td>
+      <td>{{record.last_name}}</td>
+      <td>{{record.email}}</td>
+
+    </tr>
+
+{% endfor %}
+  </tbody>
+  </table>
+{% endif %}
+{% else %}
+<h1>Login</h1>
+<br>
+<form action="{% url 'home' %}" method="post"> {% csrf_token %}
+    <form>
+        <div class="mb-3">
+          <input type="text" class="form-control" name="username", placeholder="Username" required>
+        </div>
+        <div class="mb-3">
+          <input type="password" class="form-control" id="exampleInputPassword1", name="password", placeholder="Password" required>
+        </div>
+        <button type="submit" class="btn btn-secondary">Login</button>
+      </form>
+
+</form>
+</div>
+{% endif %}
+{% endblock %}
